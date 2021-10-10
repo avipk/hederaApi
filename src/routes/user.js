@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { verify } from 'jsonwebtoken';
 import * as userApi from '../api/user';
-
-const TOKEN_COOKIE_KEY = 'token';
+import { API_STATE, TOKEN_COOKIE_KEY } from '../api/consts';
 
 const router = Router();
 
@@ -35,12 +34,12 @@ async function login(req, res) {
     result = await userApi.login(userName, password);
   } else {
     res.status(400).json({
-      status: userApi.API_STATE.failed,
+      status: API_STATE.failed,
       error: 'A user already logged-in',
     });
   }
 
-  if (result.status === userApi.API_STATE.success) {
+  if (result.status === API_STATE.success) {
     res.cookie(TOKEN_COOKIE_KEY, result.token, { httpOnly: true });
   }
 
@@ -60,7 +59,7 @@ async function logout(req, res) {
   res.json(userApi.logout());
 }
 
-function authonticate(req, res, next) {
+export function authonticate(req, res, next) {
   const { token } = req.cookies;
   let userId = userApi.authonticate(token);
 
@@ -69,7 +68,7 @@ function authonticate(req, res, next) {
     next();
   } else {
     res.status(403).json({
-      status: userApi.API_STATE.failed,
+      status: API_STATE.failed,
       error: 'Autontication failed',
     });
   }

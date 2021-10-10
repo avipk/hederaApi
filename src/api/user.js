@@ -1,11 +1,8 @@
 import bcrypt from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
 import User from '../model/user';
-
-export const API_STATE = Object.freeze({
-  failed: 'failed',
-  success: 'success',
-});
+import { API_STATE } from './consts';
+import { OperationFailedState, OperationSuccessState } from './operationState';
 
 export async function create(loginName, password) {
   const hashedPassword = await encryptPassword(password);

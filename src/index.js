@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import config from './config';
 import userRouter from './routes/user';
+import userDetailsRouter from './routes/userDetails';
 
 /**
  * Call app initialization method.
@@ -24,6 +25,7 @@ function initExpressServer() {
   app.use(express.urlencoded({ extended: true }));
 
   app.use('/user', userRouter);
+  app.use('/userDetails', userDetailsRouter);
 
   const server = app.listen(process.env.APPLICATION_PORT, () => {
     console.log(`Express server ready, on port: ${server.address().port}`);

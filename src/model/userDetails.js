@@ -20,7 +20,7 @@ const userDetailsSchema = new Schema({
       number: String,
     },
   ],
-  uid: {
+  _id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
